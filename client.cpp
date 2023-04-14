@@ -6,14 +6,17 @@
 #include <arpa/inet.h>
 #include <cstring>
 
-void receive_messages(int client_socket) {
+void receive_messages(int client_socket)
+{
     char buffer[256];
 
-    while (true) {
+    while (true)
+    {
         memset(buffer, 0, sizeof(buffer));
         ssize_t bytes_received = recv(client_socket, buffer, sizeof(buffer), 0);
 
-        if (bytes_received <= 0) {
+        if (bytes_received <= 0)
+        {
             std::cout << "It look slike the server is down, we are now disconnecting you from the server!" << std::endl;
             break;
         }
@@ -26,9 +29,11 @@ void receive_messages(int client_socket) {
     exit(0);
 }
 
-int main() {
+int main()
+{
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
-    if (client_socket < 0) {
+    if (client_socket < 0)
+    {
         std::cerr << "Error creating client socket" << std::endl;
         return 1;
     }
@@ -38,7 +43,8 @@ int main() {
     server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     server_addr.sin_port = htons(8080);
 
-    if (connect(client_socket, reinterpret_cast<sockaddr*>(&server_addr), sizeof(server_addr)) < 0) {
+    if (connect(client_socket, reinterpret_cast<sockaddr *>(&server_addr), sizeof(server_addr)) < 0)
+    {
         std::cerr << "Oops, it looks like the server you are trying to connect to is ot live!" << std::endl;
         return 1;
     }
@@ -55,11 +61,13 @@ int main() {
     receiver_thread.detach();
 
     char buffer[256];
-    while (true) {
-        //std::cout << "Enter a message: ";
+    while (true)
+    {
+        // std::cout << "Enter a message: ";
         std::cin.getline(buffer, sizeof(buffer));
 
-        if (send(client_socket, buffer, strlen(buffer), 0) < 0) {
+        if (send(client_socket, buffer, strlen(buffer), 0) < 0)
+        {
             std::cerr << "Error sending message" << std::endl;
         }
     }
