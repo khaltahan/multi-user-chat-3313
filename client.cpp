@@ -17,11 +17,11 @@ void receive_messages(int client_socket)
 
         if (bytes_received <= 0)
         {
-            std::cout << "It look slike the server is down, we are now disconnecting you from the server!" << std::endl;
+            std::cout << "It looks like the server is down, we are now disconnecting you from the server!" << std::endl;
             break;
         }
 
-        std::cout << "Message received: " << buffer << std::endl;
+        std::cout << "Message received from " << buffer << std::endl;
     }
 
     close(client_socket);
@@ -45,7 +45,7 @@ int main()
 
     if (connect(client_socket, reinterpret_cast<sockaddr *>(&server_addr), sizeof(server_addr)) < 0)
     {
-        std::cerr << "Oops, it looks like the server you are trying to connect to is ot live!" << std::endl;
+        std::cerr << "Oops, it looks like the server you are trying to connect to is not live!" << std::endl;
         return 1;
     }
 
